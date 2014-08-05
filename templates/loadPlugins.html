@@ -1,0 +1,9 @@
+{* I know this looks wonky .. but hey, it works all right for now! *}
+{* Makes sure the plugin being displayed is for the right page in the right place *}
+
+{foreach from=$plugins item=plug key=pluginName}{* {$plugins[$pluginName][$thisPage].pos} == {$pos}<Br /> *}
+	{if $plugins[$pluginName][$thisPage].pos == $pos}
+		{$plugins[$pluginName][$thisPage].data}
+	{/if}
+{/foreach}
+

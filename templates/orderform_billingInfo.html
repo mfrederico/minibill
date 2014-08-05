@@ -1,0 +1,147 @@
+{literal}
+<script>
+
+function do_toggle(id)
+{
+	//toggle(id);
+
+	if (id == 'do_login') 
+	{
+		document.orderform.login.value='login';
+		document.getElementById('do_login').style.display='block';
+		document.getElementById('billing').style.display='none';
+	}
+	else 
+	{
+		document.orderform.login.value='';
+		document.getElementById('do_login').style.display='block';
+		document.getElementById('billing').style.display='block';
+	}
+}
+
+</script>
+<style>
+li a
+{
+	text-decoration:underline;
+}
+	
+</style>
+{/literal}
+
+{if !$email && !$valid_password && !$LOGGED_IN}
+<div id="options">
+<br />
+Before you continue, please choose one of the following:<br />
+<ul>
+	<li><a href="javascript:do_toggle('do_login')">I have purchased here before</a></li>
+	<li><a href="javascript:do_toggle('billing')">I have <b>NOT</b> purchased here before</a></li>
+<ul>
+</div>
+{/if}
+
+
+<table width="100%" cellpadding="3" id="form">
+	<tr>
+		<th colspan="2">Account Information</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<input type="hidden" name="login" value="">
+			{if $email || $valid_password || $LOGGED_IN}
+			<table cellpadding="3" width="100%">
+				<tr>
+					<td><b>Email Address</b></td>
+					<td>{$email}</td>
+				</tr>
+				<tr>
+					<td><b>Password</b></td>
+					<td>**********</td>
+				</tr>
+					<input type="hidden" name="user[email]" value="{$email}">
+					<input type="hidden" name="user[password]" value="{$password}">
+					{if $id && $uniq_id}
+					<input type="hidden" name="user[id]" value="{$id}">
+					<input type="hidden" name="uniq_id" value="{$uniq_id}">
+					{/if}
+				</tr>
+			</table>
+			{else}
+			<table cellpadding="3" width="100%" id="do_login" style="display:none">
+				<tr>
+					<td><b>Email Address</b></td>
+					<td>
+						<input type="text" class="{$error_email}" name="user[email]" maxlength="255" size="30" value="{$email}">
+					</td>
+				</tr>
+				<tr>
+					<td><b>Password<br /></b></td>
+					<td>
+						<input type="password" class="{$error_password}" name="user[password]" maxlength="255" size="30" value="{$password}">
+					</td>
+				</tr>
+			</table>
+			{/if}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" cellpadding="3" id="billing" {if !$valid_password}style="display:none"{/if}>
+				<tr>
+					<td valign="top"><b>First Name</b></td>
+					<td><input type="text" class="{$error_firstname}" name="user[firstname]" maxlength="255" size="30" value="{$firstname}">
+						<br /><sup>(As it appears on your credit card)</sup></b>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Last Name</b></td>
+					<td><input type="text" class="{$error_lastname}" name="user[lastname]" maxlength="255" size="30" value="{$lastname}">
+						<br /><sup>(As it appears on your credit card)</sup>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Address</b></td>
+					<td>
+						<input type="text" class="{$error_address}" name="user[address]" maxlength="255" size="30" value="{$address}" >
+					</td>
+				</tr>
+				<tr>
+					<td><b>City</b></td>
+					<td><input type="text"  class="{$error_city}" name="user[city]" maxlength="255" size="30" value="{$city}"></td>
+				</tr>
+				<tr>
+					<td><b>State</b></td>
+					<td>
+						<select name="user[state]" class="{$error_state}">
+						<option value="">[Your State]</option>
+						{state_select selected=$state}
+						</select>
+						<!-- <input type="text" class="{$error_state}"  name="user[state]" maxlength="255" size="30" value="{$state}"> --></td>
+				</tr>
+				<tr>
+					<td><b>Zipcode</b></td>
+					<td><input type="text" class="{$error_zipcode}" name="user[zipcode]" maxlength="255" size="30" value="{$zipcode}"></td>
+				</tr>
+				<tr>
+					<td><b>Country</b></td>
+					<td>
+						<select name="user[country]" class="{$error_country}">
+						<option value="">[Your Country]</option>
+						{country_select selected=$country}
+						</select>
+						<!-- <input type="text" class="{$error_country}" name="user[country]" maxlength="255" size="30" value="{$country}">-->
+					</td>
+				</tr>
+				<tr>
+					<td><b>Contact Phone</b></td>
+					<td><input type="text" class="{$error_phone}"  name="user[phone]" maxlength="255" size="30" value="{$phone}"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<script>
+	newUser = '{$newUser}';
+	if (newUser) do_toggle('billing');
+</script>

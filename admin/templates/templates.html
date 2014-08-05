@@ -1,0 +1,16 @@
+<table cellpadding="3" width="100%">
+	<tr>
+		<th>NAME</th>
+		<th>LAST UPDATED</th>
+		<th>SIZE</th>
+		<th></th>
+	</tr>
+	{foreach from=$template item=tpl}
+	<tr>
+		<td><a href="index.php?page=editTemplate&name={$tpl.name}" title="Click to edit">{$tpl.name}</td>
+		<td>{$tpl.stamp}</td>
+		<td>{$tpl.size}</td>
+		<td><a href="index.php?action=refreshTpl&name={$tpl.name}" title="Refresh timestamp cache (smarty)">[REF]</a> <a href="javascript:confirmAction('index.php?action=delTemplate&name={$tpl.name}','Delete this template?');" title="Delete Template"><img src="../img/trash.gif" border="0" align="absmiddle"></a> </td>
+	</tr>
+	{/foreach}
+</table>
